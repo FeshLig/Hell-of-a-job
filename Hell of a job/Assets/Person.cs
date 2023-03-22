@@ -14,7 +14,7 @@ public class Person : MonoBehaviour
     [SerializeField] int direction = 0;
     [SerializeField] float dashtime = 0f;
     [SerializeField] float startdash = 0.25f;
-    [SerializeField] float dashspeed = 20f;
+    [SerializeField] float dashspeed = 30f;
     public float speed;
     public float jumpforce;
     private bool IsGrounded = false;
