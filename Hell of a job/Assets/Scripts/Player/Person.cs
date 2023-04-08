@@ -4,38 +4,49 @@ using UnityEngine;
 
 public class Person : MonoBehaviour
 {
-    // ссылка на Rigidbody
+    // СЃСЃС‹Р»РєР° РЅР° Rigidbody
     Rigidbody2D rb;
-    // ссылка на спрайт
+    // СЃСЃС‹Р»РєР° РЅР° СЃРїСЂР°Р№С‚
     SpriteRenderer sp;
+    // СЃСЃС‹Р»РєР° РЅР° РєРѕР»Р»Р°Р№РґРµСЂ
+    BoxCollider2D col;
 
-    // маска слоёв коллизии для проверки, приземлён ли игрок
+    // РІРєР»СЋС‡РµРЅРѕ Р»Рё РґРІРёР¶РµРЅРёРµ
+    bool enableMovement = true;
+
+    // СЃРјРµС‰РµРЅРёРµ РєРѕР»Р»Р°Р№РґРµСЂР° РґР»СЏ РїСЂРѕРІРµСЂРєРё, РїСЂРёР·РµРјР»С‘РЅ Р»Рё РёРіСЂРѕРє
+    [SerializeField] float groundCheckYOffset = -0.03f;
+    // РЅР° СЃРєРѕР»СЊРєРѕ СѓРјРµРЅСЊС€РёС‚СЊ С€РёСЂРёРЅСѓ РєРѕР»Р»Р°Р№РґРµСЂР° РґР»СЏ РїСЂРѕРІРµСЂРєРё, РїСЂРёР·РµРјР»С‘РЅ Р»Рё РёРіСЂРѕРє
+    // (РЅРµРѕР±С…РѕРґРёРјРѕ РґР»СЏ РїСЂРµРґРѕС‚РІСЂР°С‰РµРЅРёСЏ РїСЂС‹Р¶РєРѕРІ РѕС‚ СЃС‚РµРЅ)
+    [SerializeField] float groundCheckShrinkColliderWidthBy = 0.02f;
+    // РјР°СЃРєР° СЃР»РѕСЏ РєРѕР»Р»РёР·РёР№ РґР»СЏ РїСЂРѕРІРµСЂРєРё, РїСЂРёР·РµРјР»С‘РЅ Р»Рё РёРіСЂРѕРє
     [SerializeField] LayerMask groundLayerMask;
 
-    // целевое направление движения
+    // С†РµР»РµРІРѕРµ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ
     int MoveInput = 0;
-    // направление дэша
+    // РЅР°РїСЂР°РІР»РµРЅРёРµ РґСЌС€Р°
     int direction = 0;
 
-    // длительность дэша в секундах
+    // РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РґСЌС€Р° РІ СЃРµРєСѓРЅРґР°С…
     [SerializeField] float startdash = 0.25f;
-    // скорость дэша в юнит/сек
+    // СЃРєРѕСЂРѕСЃС‚СЊ РґСЌС€Р° РІ СЋРЅРёС‚/СЃРµРє
     [SerializeField] float dashspeed = 20f;
-    // переменная для отсчёта времени дэша
+    // РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РѕС‚СЃС‡С‘С‚Р° РІСЂРµРјРµРЅРё РґСЌС€Р°
     float dashtime = 0f;
 
-    // скорость бега в юнит/сек
+    // СЃРєРѕСЂРѕСЃС‚СЊ Р±РµРіР° РІ СЋРЅРёС‚/СЃРµРє
     [SerializeField] float speed;
-    // сила прыжка
+    // СЃРёР»Р° РїСЂС‹Р¶РєР°
     [SerializeField] float jumpforce;
 
-    // приземлён ли игрок
+    // РїСЂРёР·РµРјР»С‘РЅ Р»Рё РёРіСЂРѕРє
     bool IsGrounded = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sp = GetComponentInChildren<SpriteRenderer>();
+        col = GetComponent<BoxCollider2D>();
     }
 
     void FixedUpdate()
@@ -46,6 +57,9 @@ public class Person : MonoBehaviour
 
     void Update()
     {
+        if (!enableMovement)
+            return;
+        
         if (Input.GetButton("Horizontal"))
             Run();
         else
@@ -53,25 +67,32 @@ public class Person : MonoBehaviour
 
         if (IsGrounded && Input.GetButtonDown("Jump"))
             Jump();
-        
+
         Dash();
     }
 
-    // проверка, приземлён ли игрок
+    // РїСЂРѕРІРµСЂРєР°, РїСЂРёР·РµРјР»С‘РЅ Р»Рё РёРіСЂРѕРє
     private void CheckGrounded()
     {
-        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 0.3f, groundLayerMask);
-        IsGrounded = collider.Length > 1;
+        Collider2D[] colliders = Physics2D.OverlapBoxAll
+        (
+            point: col.bounds.center + new Vector3(0f, groundCheckYOffset, 0f),
+            size: new Vector2(col.size.x - groundCheckShrinkColliderWidthBy, col.size.y),
+            angle: 0f,
+            layerMask: groundLayerMask
+        );
+
+        IsGrounded = colliders.Length > 0;
     }
 
-    // проверка целевого направления движения
+    // РїСЂРѕРІРµСЂРєР° С†РµР»РµРІРѕРіРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ
     private void CheckMove()
     {
         Vector2 dir = transform.right * Input.GetAxisRaw("Horizontal");
         MoveInput = dir.x < 0 ? -1 : dir.x > 0 ? 1 : 0;
     }
 
-    // бег
+    // Р±РµРі
     private void Run()
     {
         Vector2 dir = transform.right * Input.GetAxisRaw("Horizontal");
@@ -79,13 +100,13 @@ public class Person : MonoBehaviour
         sp.flipX = dir.x < 0.0f;
     }
 
-    // прыжок
+    // РїСЂС‹Р¶РѕРє
     private void Jump()
     {
         rb.AddForce(transform.up * jumpforce, ForceMode2D.Impulse);
     }
 
-    // дэш
+    // РґСЌС€
     private void Dash()
     {
         if (Input.GetButtonDown("Dash"))

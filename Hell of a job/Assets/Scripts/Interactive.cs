@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Interactive : MonoBehaviour
 {
-    // компонент с основным кодом объекта
+    // РєРѕРјРїРѕРЅРµРЅС‚ СЃ РѕСЃРЅРѕРІРЅС‹Рј РєРѕРґРѕРј РѕР±СЉРµРєС‚Р°
     [SerializeField] Component component;
-    // метод внутри компонента component, который должен выполниться при взаимодействии с объектом
+    // РјРµС‚РѕРґ РІ РєРѕРјРїРѕРЅРµРЅС‚Рµ component, РєРѕС‚РѕСЂС‹Р№ РґРѕР»Р¶РµРЅ РІС‹РїРѕР»РЅРёС‚СЊСЃСЏ РїСЂРё РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРё СЃ РѕР±СЉРµРєС‚РѕРј
     [SerializeField] string methodName;
 
-    // метод, вызываемый при взаимодействии с объектом
+    // Р°РєС‚РёРІР°С†РёСЏ РјРµС‚РѕРґР° methodName РІ РєРѕРјРїРѕРЅРµРЅС‚Рµ component
     public void Activate()
     {
         component.SendMessage(methodName);

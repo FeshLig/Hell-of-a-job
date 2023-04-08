@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    // ссылка на менеджер диалогов
+    // СЃСЃС‹Р»РєР° РЅР° РјРµРЅРµРґР¶РµСЂ РґРёР°Р»РѕРіРѕРІ
     DialogueManager dialogueManager;
 
-    // имя, отображаемое в диалоговом окне
+    // РёРјСЏ, РѕС‚РѕР±СЂР°Р¶Р°РµРјРѕРµ РІ РґРёР°Р»РѕРіРѕРІРѕРј РѕРєРЅРµ
     [SerializeField] string displayName;
-    // список диалогов
+    // СЃРїРёСЃРѕРє РґРёР°Р»РѕРіРѕРІ
     [SerializeField] List<Dialogue> dialogues = new List<Dialogue>();
-    // индекс текущего диалога
+    // РёРЅРґРµРєСЃ С‚РµРєСѓС‰РµРіРѕ РґРёР°Р»РѕРіР°
     int currentDialogue = 0;
 
     void Start()
@@ -19,7 +19,7 @@ public class NPC : MonoBehaviour
         dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
-    // запуск диалога с данным NPC
+    // Р·Р°РїСѓСЃРє РґРёР°Р»РѕРіР° СЃ РґР°РЅРЅС‹Рј NPC
     public void TriggerDialogue()
     {
         dialogueManager.StartDialogue(displayName, dialogues[currentDialogue]);
@@ -28,4 +28,3 @@ public class NPC : MonoBehaviour
             currentDialogue++;
     }
 }
-

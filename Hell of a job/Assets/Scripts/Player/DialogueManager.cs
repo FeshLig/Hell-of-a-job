@@ -5,24 +5,24 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    // ссылка на аниматор диалогового окна
+    // СЃСЃС‹Р»РєР° РЅР° Р°РЅРёРјР°С‚РѕСЂ РґРёР°Р»РѕРіРѕРІРѕРіРѕ РѕРєРЅР°
     [SerializeField] Animator animator;
-    // ссылка на текст, отображающий имя NPC
+    // СЃСЃС‹Р»РєР° РЅР° С‚РµРєСЃС‚, РѕС‚РѕР±СЂР°Р¶Р°СЋС‰РёР№ РёРјСЏ NPC
     [SerializeField] Text nameText;
-    // ссылка на текст, отображающий реплики диалога
+    // СЃСЃС‹Р»РєР° РЅР° С‚РµРєСЃС‚, РѕС‚РѕР±СЂР°Р¶Р°СЋС‰РёР№ СЂРµРїР»РёРєРё РґРёР°Р»РѕРіР°
     [SerializeField] Text dialogueText;
 
-    // использовать ли эффект печатания символов
+    // РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р»Рё СЌС„С„РµРєС‚ РїРµС‡Р°С‚Р°РЅРёСЏ СЃРёРјРІРѕР»РѕРІ
     [SerializeField] bool useTyping = true;
-    // время появления очередного символа в секундах
+    // РІСЂРµРјСЏ РїРѕСЏРІР»РµРЅРёСЏ РѕС‡РµСЂРµРґРЅРѕРіРѕ СЃРёРјРІРѕР»Р° РІ СЃРµРєСѓРЅРґР°С…
     [SerializeField] float timeBetweenTypedCharacters = 0.05f;
 
-    // ссылка на скрипт движения
+    // СЃСЃС‹Р»РєР° РЅР° СЃРєСЂРёРїС‚ РґРІРёР¶РµРЅРёСЏ
     Person movementScript;
-    // ссылка на менеджер взаимодействия
+    // СЃСЃС‹Р»РєР° РЅР° РјРµРЅРµРґР¶РµСЂ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ
     InteractionManager interactionManager;
 
-    // очередь предложений текущего диалога
+    // РѕС‡РµСЂРµРґСЊ СЂРµРїР»РёРє С‚РµРєСѓС‰РµРіРѕ РґРёР°Р»РѕРіР°
     Queue<string> sentences = new Queue<string>();
 
     void Start()
@@ -37,7 +37,7 @@ public class DialogueManager : MonoBehaviour
             DisplayNextSentence();
     }
 
-    // запуск диалога
+    // Р·Р°РїСѓСЃРє РґРёР°Р»РѕРіР°
     public void StartDialogue(string npcName, Dialogue dialogue)
     {
         animator.SetBool("isOpen", true);
@@ -53,7 +53,7 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentence();
     }
 
-    // отображение очередной реплики в диалоговом окне
+    // РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РѕС‡РµСЂРµРґРЅРѕР№ СЂРµРїР»РёРєРё РІ РґРёР°Р»РѕРіРѕРІРѕРј РѕРєРЅРµ
     public void DisplayNextSentence()
     {
         if (sentences.Count == 0)
@@ -70,7 +70,7 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text = sentences.Dequeue();
     }
 
-    // корутина для эффекта печатания символов
+    // РєРѕСЂСѓС‚РёРЅР° РґР»СЏ СЌС„С„РµРєС‚Р° РїРµС‡Р°С‚Р°РЅРёСЏ СЃРёРјРІРѕР»РѕРІ
     IEnumerator TypeSentence(string sentence)
     {
         dialogueText.text = "";
@@ -79,12 +79,12 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text += ch;
             yield return new WaitForSeconds(timeBetweenTypedCharacters);
-            // не используем "yield return null", потому что при таком подходе
-            // скорость анимации печатания будет зависеть от fps
+            // РЅРµ РёСЃРїРѕР»СЊР·СѓРµРј "yield return null", РїРѕС‚РѕРјСѓ С‡С‚Рѕ РїСЂРё С‚Р°РєРѕРј РїРѕРґС…РѕРґРµ
+            // СЃРєРѕСЂРѕСЃС‚СЊ Р°РЅРёРјР°С†РёРё РїРµС‡Р°С‚Р°РЅРёСЏ Р±СѓРґРµС‚ Р·Р°РІРёСЃРµС‚СЊ РѕС‚ fps
         }
     }
 
-    // остановка диалога
+    // РѕСЃС‚Р°РЅРѕРІРєР° РґРёР°Р»РѕРіР°
     void EndDialogue()
     {
         animator.SetBool("isOpen", false);

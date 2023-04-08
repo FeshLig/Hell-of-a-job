@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Dialogue
 {
-    // набор реплик диалога
+    // РЅР°Р±РѕСЂ СЂРµРїР»РёРє РґРёР°Р»РѕРіР°
     [TextArea(3, 10)] public string[] sentences;
 }
