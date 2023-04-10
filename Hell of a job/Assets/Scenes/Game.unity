@@ -713,6 +713,7 @@ GameObject:
   - component: {fileID: 644903766}
   - component: {fileID: 644903770}
   - component: {fileID: 644903764}
+  - component: {fileID: 644903774}
   - component: {fileID: 644903767}
   - component: {fileID: 644903773}
   - component: {fileID: 644903772}
@@ -871,6 +872,80 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   damageMultiplier: 1
+--- !u!114 &644903774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644903763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 8e83311f946c5d14083870716e148767, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 03ea611b-4578-4ab6-8a56-bf70892268c3
+    m_ActionName: Default/Move[/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f9c1df9b-6288-4bc2-a0df-8acf1572cef7
+    m_ActionName: Default/Jump[/Keyboard/w,/Keyboard/upArrow,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e7a90617-87cf-4ff4-85ed-dcf355fa72e4
+    m_ActionName: Default/Dash[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e9565c10-786f-4ffe-b6a5-2f0da770ffcd
+    m_ActionName: Default/Light Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 55b2d8aa-bcd2-4c11-b471-8054a8d3f2c1
+    m_ActionName: Default/Heavy Attack[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ebffbf8c-5346-466f-9722-4e8adb7ff286
+    m_ActionName: Default/Special Attack[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 175a433e-929e-4ce3-960d-91785759adfd
+    m_ActionName: Default/Interact[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5ecd3818-1bb6-4f90-86a9-78e57c63ac24
+    m_ActionName: Default/Choose Weapon[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: de864c07-591b-41b4-be28-922639bd774b
+    m_ActionName: Default/Map[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 04fd6641-dadb-4cd4-8cf2-9ec27e032dd7
+    m_ActionName: Default/Sins[/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 38bc759e-ef05-45c3-8d68-2be330721472
+    m_ActionName: Default/Pause[/Keyboard/escape]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Desktop
+  m_DefaultActionMap: Default
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &684518728
 GameObject:
   m_ObjectHideFlags: 0
@@ -2154,6 +2229,149 @@ Transform:
   - {fileID: 411616576}
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1919823950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1919823952}
+  - component: {fileID: 1919823951}
+  m_Layer: 0
+  m_Name: Input Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1919823951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919823950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e9cf9fe84dc74b47b69c297d9193dc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 651ba97b-1ab2-4567-b821-294444a13690
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  jump:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ec5293ae-cf9a-4175-b39a-a9b345dc4a07
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  dash:
+    m_Name: Dash
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3dcf0850-8e7b-42e1-924d-a8d92dbf77d9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  lightAttack:
+    m_Name: Light Attack
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a69a31fa-e8dc-4d08-8645-4858d5f7334c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  heavyAttack:
+    m_Name: Heavy Attack
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 38c1e002-3a5f-4a4b-bed3-f4321dc190ff
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  specialAttack:
+    m_Name: Special Attack
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b9f89a5a-af95-494a-9121-1da62e7359e8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  interact:
+    m_Name: Interact
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 481ad7e0-7449-4c72-8a70-49d0e1a81919
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  chooseWeapon:
+    m_Name: Choose Weapon
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d77e7f76-10d8-431d-a788-3f116ea0c248
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  map:
+    m_Name: Map
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 78a6bc3d-bf42-462c-9298-912fd2f98783
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  sins:
+    m_Name: Sins
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1f6979b2-4884-4327-b6d1-d4da4c68abb5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  pause:
+    m_Name: Pause
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2c49e850-f91e-4d20-9970-41244e02dddb
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+--- !u!4 &1919823952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919823950}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1975924566
 GameObject:

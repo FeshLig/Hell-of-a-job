@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Person : MonoBehaviour, IMoving
 {
+    // ссылка на менеджер ввода
+    InputManager inputManager;
     // ссылка на Rigidbody
     Rigidbody2D rb;
     // ссылка на спрайт
@@ -44,6 +47,7 @@ public class Person : MonoBehaviour, IMoving
 
     void Start()
     {
+        inputManager = FindObjectOfType<InputManager>();
         rb = GetComponent<Rigidbody2D>();
         sp = GetComponentInChildren<SpriteRenderer>();
         col = GetComponent<BoxCollider2D>();
@@ -61,15 +65,15 @@ public class Person : MonoBehaviour, IMoving
 
         if (!enableMovement)
             return;
-        
-        if (Input.GetButton("Horizontal"))
+
+        if (inputManager.move.IsPressed())
             Run();
-        else if (Input.GetButtonUp("Horizontal") || IsGrounded)
+        else if (inputManager.move.WasReleasedThisFrame() || IsGrounded)
             rb.velocity = new Vector2(0f, rb.velocity.y);
 
-        if (IsGrounded && Input.GetButtonDown("Jump"))
+        if (IsGrounded && inputManager.jump.WasPressedThisFrame())
             Jump();
-
+        
         Dash();
     }
 
@@ -90,14 +94,14 @@ public class Person : MonoBehaviour, IMoving
     // проверка целевого направления движения
     private void CheckMove()
     {
-        Vector2 dir = transform.right * Input.GetAxisRaw("Horizontal");
+        Vector2 dir = transform.right * inputManager.move.ReadValue<float>();
         MoveInput = dir.x < 0 ? -1 : dir.x > 0 ? 1 : 0;
     }
 
     // бег
     private void Run()
     {
-        Vector2 dir = transform.right * Input.GetAxisRaw("Horizontal");
+        Vector2 dir = transform.right * inputManager.move.ReadValue<float>();
         rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
         sp.flipX = dir.x < 0.0f;
     }
@@ -111,7 +115,7 @@ public class Person : MonoBehaviour, IMoving
     // дэш
     private void Dash()
     {
-        if (Input.GetButtonDown("Dash"))
+        if (inputManager.dash.WasPressedThisFrame())
         {
             direction = (MoveInput != 0) ? MoveInput : (sp.flipX ? -1 : 1);
             dashtime = startdash;

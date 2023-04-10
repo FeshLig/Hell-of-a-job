@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractionManager : MonoBehaviour
 {
+    // ссылка на менеджер ввода
+    InputManager inputManager;
     // подсказка о возможности взаимодействия
     [SerializeField] GameObject hint;
 
@@ -12,9 +15,14 @@ public class InteractionManager : MonoBehaviour
     // список всех интерактивных объектов, с которыми возможно взаимодействовать в данный момент
     List<GameObject> interactiveOverlaps = new List<GameObject>();
 
+    void Start()
+    {
+        inputManager = FindObjectOfType<InputManager>();
+    }
+
     void Update()
     {
-        if (canInteract && Input.GetButtonDown("Interact"))
+        if (canInteract && inputManager.interact.WasPressedThisFrame())
         {
             foreach (GameObject obj in interactiveOverlaps)
                 obj.GetComponent<Interactive>().Activate();
