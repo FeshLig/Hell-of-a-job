@@ -18,7 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] float timeBetweenTypedCharacters = 0.05f;
 
     // ссылка на скрипт движения
-    Person movementScript;
+    IMoving movementScript;
     // ссылка на менеджер взаимодействия
     InteractionManager interactionManager;
 
@@ -41,7 +41,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(string npcName, Dialogue dialogue)
     {
         animator.SetBool("isOpen", true);
-        movementScript.enabled = false;
+        movementScript.DisableMovement();
         interactionManager.enabled = false;
 
         nameText.text = npcName;
@@ -88,7 +88,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         animator.SetBool("isOpen", false);
-        movementScript.enabled = true;
+        movementScript.EnableMovement();
         interactionManager.enabled = true;
     }
 }

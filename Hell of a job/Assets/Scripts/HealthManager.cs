@@ -5,12 +5,12 @@ using UnityEngine;
 public class HealthManager : MonoBehaviour
 {
     // максимальное количество здоровья
-    [SerializeField] float maxHealth = 100f;
+    [SerializeField] protected float maxHealth = 100f;
     // текущее количество здоровья
-    [SerializeField] float currentHealth = 100f;
+    [SerializeField] protected float currentHealth = 100f;
 
     // множитель для получаемого урона
-    [SerializeField] float damageMultiplier = 1f;
+    [SerializeField] protected float damageMultiplier = 1f;
 
     void Start()
     {
@@ -30,13 +30,13 @@ public class HealthManager : MonoBehaviour
     }
 
     // увеличить получаемый урон на %
-    void IncreaseDamageMultiplier(float percentage)
+    public void IncreaseDamageMultiplier(float percentage)
     {
         damageMultiplier += percentage * 0.01f;
     }
 
     // временно увеличить получаемый урон на %
-    void IncreaseDamageMultiplier(float percentage, float seconds)
+    public void IncreaseDamageMultiplier(float percentage, float seconds)
     {
         StartCoroutine(TemporarilyIncreaseDamageMultiplier(percentage, seconds));
     }
@@ -50,13 +50,13 @@ public class HealthManager : MonoBehaviour
     }
 
     // уменьшить получаемый урон на %
-    void DecreaseDamageMultiplier(float percentage)
+    public void DecreaseDamageMultiplier(float percentage)
     {
         damageMultiplier -= percentage * 0.01f;
     }
 
     // временно уменьшить получаемый урон на %
-    void DecreaseDamageMultiplier(float percentage, float seconds)
+    public void DecreaseDamageMultiplier(float percentage, float seconds)
     {
         StartCoroutine(TemporarilyDecreaseDamageMultiplier(percentage, seconds));
     }

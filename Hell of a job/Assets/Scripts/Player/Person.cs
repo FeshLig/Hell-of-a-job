@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Person : MonoBehaviour
+public class Person : MonoBehaviour, IMoving
 {
     // ссылка на Rigidbody
     Rigidbody2D rb;
@@ -57,12 +57,14 @@ public class Person : MonoBehaviour
 
     void Update()
     {
+        rb.WakeUp();
+
         if (!enableMovement)
             return;
         
         if (Input.GetButton("Horizontal"))
             Run();
-        else
+        else if (Input.GetButtonUp("Horizontal") || IsGrounded)
             rb.velocity = new Vector2(0f, rb.velocity.y);
 
         if (IsGrounded && Input.GetButtonDown("Jump"))
@@ -122,11 +124,26 @@ public class Person : MonoBehaviour
         {
             direction = 0;
             dashtime = startdash;
+            rb.velocity = new Vector2(0f, rb.velocity.y);
         }
         else
         {
             dashtime -= Time.deltaTime;
-            rb.velocity = new Vector2(rb.velocity.x + direction * dashspeed, 0f);
+            rb.velocity = new Vector2(direction * dashspeed, 0f);
         }
+    }
+
+    // включить движение (реализация интерфейса IMoving)
+    public void EnableMovement()
+    {
+        enableMovement = true;
+    }
+
+    // выключить движение (реализация интерфейса IMoving)
+    public void DisableMovement()
+    {
+        enableMovement = false;
+        dashtime = 0f;
+        rb.velocity = new Vector2(0f, rb.velocity.y);
     }
 }
