@@ -53,24 +53,10 @@ namespace Ink.Parsed
                         }
                     }
                 }
-<<<<<<< Updated upstream
 
                 // Finally, divert to the requested target 
                 _overrideDivertTarget = new Runtime.DivertTargetValue ();
                 container.AddContent (_overrideDivertTarget);
-=======
-                
-                // Supply the divert target for the tunnel onwards target, either variable or more commonly, the explicit name
-                var returnDivertObj = returnRuntimeObj as Runtime.Divert;
-                if( returnDivertObj != null && returnDivertObj.hasVariableTarget ) {
-                    var runtimeVarRef = new Runtime.VariableReference (returnDivertObj.variableDivertName);
-                    container.AddContent(runtimeVarRef);
-                } else {
-                    _overrideDivertTarget = new Runtime.DivertTargetValue ();
-                    container.AddContent (_overrideDivertTarget);
-                }
-
->>>>>>> Stashed changes
             } 
 
             // No divert after tunnel onwards

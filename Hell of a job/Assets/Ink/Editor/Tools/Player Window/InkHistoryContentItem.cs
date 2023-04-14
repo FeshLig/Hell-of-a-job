@@ -47,7 +47,6 @@ namespace Ink.UnityIntegration.Debugging {
             return new InkHistoryContentItem(choiceText, tags, InkHistoryContentItem.ContentType.PresentedContent);
         }
         public static InkHistoryContentItem CreateForPresentChoice (Choice choice) {
-<<<<<<< Updated upstream
             return new InkHistoryContentItem(choice.text.Trim(), InkHistoryContentItem.ContentType.PresentedChoice);
         }
         public static InkHistoryContentItem CreateForMakeChoice (Choice choice) {
@@ -70,30 +69,6 @@ namespace Ink.UnityIntegration.Debugging {
         }
         public static InkHistoryContentItem CreateForDebugNote (string choiceText) {
             return new InkHistoryContentItem(choiceText, InkHistoryContentItem.ContentType.DebugNote);
-=======
-            return new InkHistoryContentItem(choice.text.Trim(), choice.tags, InkHistoryContentItem.ContentType.PresentedChoice);
-        }
-        public static InkHistoryContentItem CreateForMakeChoice (Choice choice) {
-            return new InkHistoryContentItem(choice.text.Trim(), choice.tags, InkHistoryContentItem.ContentType.ChooseChoice);
-        }
-        public static InkHistoryContentItem CreateForEvaluateFunction (string functionInfoText) {
-            return new InkHistoryContentItem(functionInfoText, InkHistoryContentItem.ContentType.EvaluateFunction);
-        }
-        public static InkHistoryContentItem CreateForCompleteEvaluateFunction (string functionInfoText) {
-            return new InkHistoryContentItem(functionInfoText, InkHistoryContentItem.ContentType.CompleteEvaluateFunction);
-        }
-        public static InkHistoryContentItem CreateForChoosePathString (string choosePathStringText) {
-            return new InkHistoryContentItem(choosePathStringText, InkHistoryContentItem.ContentType.ChoosePathString);
-        }
-        public static InkHistoryContentItem CreateForWarning (string warningText) {
-            return new InkHistoryContentItem(warningText, InkHistoryContentItem.ContentType.Warning);
-        }
-        public static InkHistoryContentItem CreateForError (string errorText) {
-            return new InkHistoryContentItem(errorText, InkHistoryContentItem.ContentType.Error);
-        }
-        public static InkHistoryContentItem CreateForDebugNote (string noteText) {
-            return new InkHistoryContentItem(noteText, InkHistoryContentItem.ContentType.DebugNote);
->>>>>>> Stashed changes
         }
 
         struct JsonDateTime {

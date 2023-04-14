@@ -18,15 +18,7 @@ namespace Ink.Runtime
         /// <summary>
         /// The current version of the state save file JSON-based format.
         /// </summary>
-<<<<<<< Updated upstream
         public const int kInkSaveStateVersion = 9; // new: multi-flows, but backward compatible
-=======
-        //
-        // Backward compatible changes since v8:
-        // v10: dynamic tags
-        // v9:  multi-flows
-        public const int kInkSaveStateVersion = 10;
->>>>>>> Stashed changes
         const int kMinCompatibleLoadVersion = 8;
 
         /// <summary>
@@ -279,29 +271,11 @@ namespace Ink.Runtime
 				if( _outputStreamTextDirty ) {
 					var sb = new StringBuilder ();
 
-<<<<<<< Updated upstream
 					foreach (var outputObj in outputStream) {
 						var textContent = outputObj as StringValue;
 						if (textContent != null) {
 							sb.Append(textContent.value);
 						}
-=======
-                    bool inTag = false;
-					foreach (var outputObj in outputStream) {
-						var textContent = outputObj as StringValue;
-						if (!inTag && textContent != null) {
-							sb.Append(textContent.value);
-						} else {
-                            var controlCommand = outputObj as ControlCommand;
-                            if( controlCommand != null ) {
-                                if( controlCommand.commandType == ControlCommand.CommandType.BeginTag ) {
-                                    inTag = true;
-                                } else if( controlCommand.commandType == ControlCommand.CommandType.EndTag ) {
-                                    inTag = false;
-                                }
-                            }
-                        }
->>>>>>> Stashed changes
 					}
 
                     _currentText = CleanOutputWhitespace (sb.ToString ());
@@ -317,11 +291,7 @@ namespace Ink.Runtime
         // Cleans inline whitespace in the following way:
         //  - Removes all whitespace from the start and end of line (including just before a \n)
         //  - Turns all consecutive space and tab runs into single spaces (HTML style)
-<<<<<<< Updated upstream
         string CleanOutputWhitespace(string str)
-=======
-        public string CleanOutputWhitespace(string str)
->>>>>>> Stashed changes
         {
             var sb = new StringBuilder(str.Length);
 
@@ -360,7 +330,6 @@ namespace Ink.Runtime
 				if( _outputStreamTagsDirty ) {
 					_currentTags = new List<string>();
 
-<<<<<<< Updated upstream
 					foreach (var outputObj in outputStream) {
 						var tag = outputObj as Tag;
 						if (tag != null) {
@@ -368,56 +337,6 @@ namespace Ink.Runtime
 						}
 					}
 
-=======
-                    bool inTag = false;
-                    var sb = new StringBuilder ();
-
-					foreach (var outputObj in outputStream) {
-                        var controlCommand = outputObj as ControlCommand;
-
-                        if( controlCommand != null ) {
-                            if( controlCommand.commandType == ControlCommand.CommandType.BeginTag ) {
-                                if( inTag && sb.Length > 0 ) {
-                                    var txt = CleanOutputWhitespace(sb.ToString());
-                                    _currentTags.Add(txt);
-                                    sb.Clear();
-                                }
-                                inTag = true;
-                            }
-
-                            else if( controlCommand.commandType == ControlCommand.CommandType.EndTag ) {
-                                if( sb.Length > 0 ) {
-                                    var txt = CleanOutputWhitespace(sb.ToString());
-                                    _currentTags.Add(txt);
-                                    sb.Clear();
-                                }
-                                inTag = false;
-                            }
-                        }
-
-                        else if( inTag ) {
-                            var strVal = outputObj as StringValue;
-                            if( strVal != null ) {
-                                sb.Append(strVal.value);
-                            }
-                        }
-
-                        else {
-                            var tag = outputObj as Tag;
-                            if (tag != null && tag.text != null && tag.text.Length > 0) {
-                                _currentTags.Add (tag.text); // tag.text has whitespae already cleaned
-                            }
-                        }
-
-					}
-
-                    if( sb.Length > 0 ) {
-                        var txt = CleanOutputWhitespace(sb.ToString());
-                        _currentTags.Add(txt);
-                        sb.Clear();
-                    }
-
->>>>>>> Stashed changes
 					_outputStreamTagsDirty = false;
 				}
 
@@ -432,39 +351,6 @@ namespace Ink.Runtime
             }
         }
 
-<<<<<<< Updated upstream
-=======
-        public bool currentFlowIsDefaultFlow {
-            get {
-                return _currentFlow.name == kDefaultFlowName;
-            }
-        }
-
-        public List<string> aliveFlowNames {
-            get {
-
-                if( _aliveFlowNamesDirty ) {
-					_aliveFlowNames = new List<string>();
-
-                    if (_namedFlows != null)
-                    {
-                        foreach (string flowName in _namedFlows.Keys) {
-                            if (flowName != kDefaultFlowName) {
-                                _aliveFlowNames.Add(flowName);
-                            }
-                        }
-                    }
-
-					_aliveFlowNamesDirty = false;
-				}
-
-				return _aliveFlowNames;
-            }
-        }
-
-        List<string> _aliveFlowNames;
-
->>>>>>> Stashed changes
         public bool inExpressionEvaluation {
             get {
                 return callStack.currentElement.inExpressionEvaluation;
@@ -481,10 +367,6 @@ namespace Ink.Runtime
             _currentFlow = new Flow(kDefaultFlowName, story);
             
 			OutputStreamDirty();
-<<<<<<< Updated upstream
-=======
-            _aliveFlowNamesDirty = true;
->>>>>>> Stashed changes
 
             evaluationStack = new List<Runtime.Object> ();
 
@@ -527,10 +409,6 @@ namespace Ink.Runtime
             if( !_namedFlows.TryGetValue(flowName, out flow) ) {
                 flow = new Flow(flowName, story);
                 _namedFlows[flowName] = flow;
-<<<<<<< Updated upstream
-=======
-                _aliveFlowNamesDirty = true;
->>>>>>> Stashed changes
             }
 
             _currentFlow = flow;
@@ -557,10 +435,6 @@ namespace Ink.Runtime
             }
 
             _namedFlows.Remove(flowName);
-<<<<<<< Updated upstream
-=======
-            _aliveFlowNamesDirty = true;
->>>>>>> Stashed changes
         }
 
         // Warning: Any Runtime.Object content referenced within the StoryState will
@@ -591,10 +465,6 @@ namespace Ink.Runtime
                 foreach(var namedFlow in _namedFlows)
                     copy._namedFlows[namedFlow.Key] = namedFlow.Value;
                 copy._namedFlows[_currentFlow.name] = copy._currentFlow;
-<<<<<<< Updated upstream
-=======
-                copy._aliveFlowNamesDirty = true;
->>>>>>> Stashed changes
             }
 
             if (hasError) {
@@ -779,10 +649,6 @@ namespace Ink.Runtime
             }
 
             OutputStreamDirty();
-<<<<<<< Updated upstream
-=======
-            _aliveFlowNamesDirty = true;
->>>>>>> Stashed changes
 
             variablesState.SetJsonToken((Dictionary < string, object> )jObject["variablesState"]);
             variablesState.callStack = _currentFlow.callStack;
@@ -1283,13 +1149,8 @@ namespace Ink.Runtime
             // Pass arguments onto the evaluation stack
             if (arguments != null) {
                 for (int i = 0; i < arguments.Length; i++) {
-<<<<<<< Updated upstream
                     if (!(arguments [i] is int || arguments [i] is float || arguments [i] is string || arguments [i] is InkList)) {
                         throw new System.ArgumentException ("ink arguments when calling EvaluateFunction / ChoosePathStringWithParameters must be int, float, string or InkList. Argument was "+(arguments [i] == null ? "null" : arguments [i].GetType().Name));
-=======
-                    if (!(arguments [i] is int || arguments [i] is float || arguments [i] is string || arguments [i] is bool || arguments [i] is InkList)) {
-                        throw new System.ArgumentException ("ink arguments when calling EvaluateFunction / ChoosePathStringWithParameters must be int, float, string, bool or InkList. Argument was "+(arguments [i] == null ? "null" : arguments [i].GetType().Name));
->>>>>>> Stashed changes
                     }
 
                     PushEvaluationStack (Runtime.Value.Create (arguments [i]));
@@ -1384,10 +1245,6 @@ namespace Ink.Runtime
         Flow _currentFlow;
         Dictionary<string, Flow> _namedFlows;
         const string kDefaultFlowName = "DEFAULT_FLOW";
-<<<<<<< Updated upstream
-=======
-        bool _aliveFlowNamesDirty = true;
->>>>>>> Stashed changes
     }
 }
 

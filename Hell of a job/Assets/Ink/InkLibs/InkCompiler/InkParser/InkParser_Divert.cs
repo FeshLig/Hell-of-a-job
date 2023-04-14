@@ -30,11 +30,6 @@ namespace Ink
 
             diverts = new List<Parsed.Object> ();
 
-<<<<<<< Updated upstream
-=======
-            EndTagIfNecessary(diverts);
-
->>>>>>> Stashed changes
             // Possible patterns:
             //  ->                   -- explicit gather
             //  ->->                 -- tunnel onwards

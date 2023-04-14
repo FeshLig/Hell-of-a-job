@@ -49,11 +49,6 @@ namespace Ink
             bool hasWeaveStyleInlineBrackets = ParseString("[") != null;
             if (hasWeaveStyleInlineBrackets) {
 
-<<<<<<< Updated upstream
-=======
-                EndTagIfNecessary(startContent);
-
->>>>>>> Stashed changes
                 var optionOnlyTextAndLogic = Parse (MixedTextAndLogic);
                 if (optionOnlyTextAndLogic != null)
                     optionOnlyContent = new ContentList (optionOnlyTextAndLogic);
@@ -61,11 +56,6 @@ namespace Ink
 
                 Expect (String("]"), "closing ']' for weave-style option");
 
-<<<<<<< Updated upstream
-=======
-                EndTagIfNecessary(optionOnlyContent);
-
->>>>>>> Stashed changes
                 var innerTextAndLogic = Parse (MixedTextAndLogic);
                 if( innerTextAndLogic != null )
                     innerContent = new ContentList (innerTextAndLogic);
@@ -73,11 +63,6 @@ namespace Ink
 
 			Whitespace ();
 
-<<<<<<< Updated upstream
-=======
-            EndTagIfNecessary(innerContent ?? startContent);
-
->>>>>>> Stashed changes
             // Finally, now we know we're at the end of the main choice body, parse
             // any diverts separately.
             var diverts =  Parse(MultiDivert);
@@ -97,14 +82,10 @@ namespace Ink
 
             if (!innerContent) innerContent = new ContentList ();
 
-<<<<<<< Updated upstream
             var tags = Parse (Tags);
             if (tags != null) {
                 innerContent.AddContent(tags);
             }
-=======
-            EndTagIfNecessary(innerContent);
->>>>>>> Stashed changes
 
             // Normal diverts on the end of a choice - simply add to the normal content
             if (diverts != null) {

@@ -7,7 +7,6 @@ namespace Ink.UnityIntegration
 	public class InkCompilerLog {
 		public Ink.ErrorType type;
 		public string content;
-<<<<<<< Updated upstream
 		public string fileName;
 		public int lineNumber;
 
@@ -18,33 +17,11 @@ namespace Ink.UnityIntegration
 			this.lineNumber = lineNumber;
 		}
 
-=======
-		public string relativeFilePath;
-		public int lineNumber;
-
-		public InkCompilerLog (Ink.ErrorType type, string content, string relativeFilePath, int lineNumber = -1) {
-			this.type = type;
-			this.content = content;
-			this.relativeFilePath = relativeFilePath;
-			this.lineNumber = lineNumber;
-		}
-
-		public string GetAbsoluteFilePath (InkFile masterInkFile) {
-			Debug.Log(masterInkFile.absoluteFolderPath);
-			Debug.Log(relativeFilePath);
-			return System.IO.Path.Combine(masterInkFile.absoluteFolderPath, relativeFilePath);
-		}
-
->>>>>>> Stashed changes
 		public static bool TryParse (string rawLog, out InkCompilerLog log) {
 			var match = _errorRegex.Match(rawLog);
 			if (match.Success) {
 				Ink.ErrorType errorType = Ink.ErrorType.Author;
-<<<<<<< Updated upstream
 				string filename = null;
-=======
-				string relativeFilePath = null;
->>>>>>> Stashed changes
 				int lineNo = -1;
 				string message = null;
 				
@@ -59,11 +36,7 @@ namespace Ink.UnityIntegration
 				
 				var filenameCapture = match.Groups["filename"];
 				if (filenameCapture != null)
-<<<<<<< Updated upstream
 					filename = filenameCapture.Value;
-=======
-					relativeFilePath = filenameCapture.Value;
->>>>>>> Stashed changes
 				
 				var lineNoCapture = match.Groups["lineNo"];
 				if (lineNoCapture != null)
@@ -72,11 +45,7 @@ namespace Ink.UnityIntegration
 				var messageCapture = match.Groups["message"];
 				if (messageCapture != null)
 					message = messageCapture.Value.Trim();
-<<<<<<< Updated upstream
 				log = new InkCompilerLog(errorType, message, filename, lineNo);
-=======
-				log = new InkCompilerLog(errorType, message, relativeFilePath, lineNo);
->>>>>>> Stashed changes
 				return true;
 			} else {
 				Debug.LogWarning("Could not parse InkFileLog from log: "+rawLog);

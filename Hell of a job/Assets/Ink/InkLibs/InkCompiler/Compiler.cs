@@ -9,11 +9,7 @@ namespace Ink
         public class Options
         {
             public string sourceFilename;
-<<<<<<< Updated upstream
             public List<string> pluginNames;
-=======
-            public List<string> pluginDirectories;
->>>>>>> Stashed changes
             public bool countAllVisits;
             public Ink.ErrorHandler errorHandler;
             public Ink.IFileHandler fileHandler;
@@ -29,13 +25,8 @@ namespace Ink
         {
             _inputString = inkSource;
             _options = options ?? new Options();
-<<<<<<< Updated upstream
             if( _options.pluginNames != null )
                 _pluginManager = new PluginManager (_options.pluginNames);
-=======
-            if( _options.pluginDirectories != null )
-                _pluginManager = new PluginManager (_options.pluginDirectories);
->>>>>>> Stashed changes
         }
 
         public Parsed.Story Parse()
@@ -47,20 +38,10 @@ namespace Ink
 
         public Runtime.Story Compile ()
         {
-<<<<<<< Updated upstream
             Parse();
 
             if( _pluginManager != null )
                 _pluginManager.PostParse(_parsedStory);
-=======
-            if( _pluginManager != null )
-                _inputString = _pluginManager.PreParse(_inputString);
-
-            Parse();
-
-            if( _pluginManager != null )
-                _parsedStory = _pluginManager.PostParse(_parsedStory);
->>>>>>> Stashed changes
 
             if (_parsedStory != null && !_hadParseError) {
 
@@ -69,11 +50,7 @@ namespace Ink
                 _runtimeStory = _parsedStory.ExportRuntime (_options.errorHandler);
 
                 if( _pluginManager != null )
-<<<<<<< Updated upstream
                     _pluginManager.PostExport (_parsedStory, _runtimeStory);
-=======
-                    _runtimeStory = _pluginManager.PostExport (_parsedStory, _runtimeStory);
->>>>>>> Stashed changes
             } else {
                 _runtimeStory = null;
             }
