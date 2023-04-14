@@ -1297,9 +1297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e596e4136b982e74c99c3ffdde0418cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 8
+  force: 10
   forceMultiplier: 1
-  paralysisDuration: 0.2
+  paralysisDuration: 0.25
   angle: 20
 --- !u!50 &1096875816
 Rigidbody2D:

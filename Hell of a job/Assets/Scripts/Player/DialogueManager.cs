@@ -33,7 +33,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-        if (animator.GetBool("isOpen") && Input.GetButtonDown("Interact"))
+        if (animator.GetBool("isOpen") && InputManager.InteractWasPressedThisFrame)
             DisplayNextSentence();
     }
 

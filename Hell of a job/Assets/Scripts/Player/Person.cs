@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class Person : MonoBehaviour, IMoving
 {
-    // ссылка на менеджер ввода
-    InputManager inputManager;
     // ссылка на Rigidbody
     Rigidbody2D rb;
     // ссылка на спрайт
@@ -47,7 +45,6 @@ public class Person : MonoBehaviour, IMoving
 
     void Start()
     {
-        inputManager = FindObjectOfType<InputManager>();
         rb = GetComponent<Rigidbody2D>();
         sp = GetComponentInChildren<SpriteRenderer>();
         col = GetComponent<BoxCollider2D>();
@@ -66,12 +63,12 @@ public class Person : MonoBehaviour, IMoving
         if (!enableMovement)
             return;
 
-        if (inputManager.move.IsPressed())
+        if (InputManager.MoveIsPressed)
             Run();
-        else if (inputManager.move.WasReleasedThisFrame() || IsGrounded)
+        else if (InputManager.MoveWasReleasedThisFrame || IsGrounded)
             rb.velocity = new Vector2(0f, rb.velocity.y);
 
-        if (IsGrounded && inputManager.jump.WasPressedThisFrame())
+        if (IsGrounded && InputManager.JumpWasPressedThisFrame)
             Jump();
         
         Dash();
@@ -94,14 +91,14 @@ public class Person : MonoBehaviour, IMoving
     // проверка целевого направления движения
     private void CheckMove()
     {
-        Vector2 dir = transform.right * inputManager.move.ReadValue<float>();
+        Vector2 dir = transform.right * InputManager.MoveValue;
         MoveInput = dir.x < 0 ? -1 : dir.x > 0 ? 1 : 0;
     }
 
     // бег
     private void Run()
     {
-        Vector2 dir = transform.right * inputManager.move.ReadValue<float>();
+        Vector2 dir = transform.right * InputManager.MoveValue;
         rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
         sp.flipX = dir.x < 0.0f;
     }
@@ -115,7 +112,7 @@ public class Person : MonoBehaviour, IMoving
     // дэш
     private void Dash()
     {
-        if (inputManager.dash.WasPressedThisFrame())
+        if (InputManager.DashWasPressedThisFrame)
         {
             direction = (MoveInput != 0) ? MoveInput : (sp.flipX ? -1 : 1);
             dashtime = startdash;

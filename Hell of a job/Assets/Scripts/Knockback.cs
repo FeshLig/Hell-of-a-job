@@ -8,7 +8,7 @@ public class Knockback : MonoBehaviour
     Rigidbody2D rb;
 
     // сила отбрасывания
-    [SerializeField] float force = 8f;
+    [SerializeField] float force = 10f;
     // множитель силы отбрасывания
     [SerializeField] float forceMultiplier = 1f;
     // длительность блокировки движения при отбрасывании в секундах
