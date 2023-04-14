@@ -6,13 +6,14 @@ using UnityEngine;
 public class Person : MonoBehaviour
 {
 
-    [SerializeField] private Rigidbody2D rb;
+    private Rigidbody2D rb;
     private SpriteRenderer sp;
 
+    [SerializeField] LayerMask groundLayerMask;
 
-    [SerializeField] int MoveInput = 0;
-    [SerializeField] int direction = 0;
-    [SerializeField] float dashtime = 0f;
+    int MoveInput = 0;
+    int direction = 0;
+    float dashtime = 0f;
     [SerializeField] float startdash = 0.25f;
     [SerializeField] float dashspeed = 20f;
     public float speed;
@@ -38,6 +39,10 @@ public class Person : MonoBehaviour
     {
         if (Input.GetButton("Horizontal"))
             Run();
+        else
+        {
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+        }
         if (IsGrounded && Input.GetButtonDown("Jump"))
             Jump();
         Dash();
@@ -46,7 +51,7 @@ public class Person : MonoBehaviour
     private void Run()
     {
         Vector3 dir = transform.right * Input.GetAxisRaw("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
+        rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
         sp.flipX = dir.x < 0.0f;
     }
 
@@ -72,36 +77,23 @@ public class Person : MonoBehaviour
     {
         if (Input.GetButtonDown("Dash"))
         {
-            if (MoveInput < 0)
-            {
-                direction = 1;
-            }
-            else if (MoveInput == 0)
-            {
-                direction = sp.flipX ? 1 : 2;
-            }
-            else
-            {
-                direction = 2;
-            }
-
+            direction = (MoveInput != 0) ? MoveInput : (sp.flipX ? -1 : 1);
             dashtime = startdash;
         }
 
-        if (direction != 0)
+        if (direction == 0)
         {
-            if (dashtime <= 0)
-            {
-                direction = 0;
-                dashtime = startdash;
-                rb.velocity = Vector2.zero;
-            }
-            else
-            {
-                dashtime -= Time.deltaTime;
-                rb.velocity = direction == 2 ? Vector2.right * dashspeed : Vector2.left * dashspeed;
-            }
+            return;
         }
-
+        if(dashtime <= 0)
+        {
+            direction = 0;
+            dashtime = startdash;
+        }
+        else
+        {
+            dashtime -= Time.deltaTime;
+            rb.velocity = new Vector2(rb.velocity.x + direction * dashspeed, 0f);
+        }
     }
 }
