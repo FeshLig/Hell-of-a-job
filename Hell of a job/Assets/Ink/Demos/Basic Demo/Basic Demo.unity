@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 27
+<<<<<<< Updated upstream
 --- !u!114 &1908123725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,6 +554,8 @@ MonoBehaviour:
   canvas: {fileID: 1908123726}
   textPrefab: {fileID: 11456674, guid: 1aab6ef84d87c416f8f0b3e1ef3d77d2, type: 3}
   buttonPrefab: {fileID: 11455116, guid: 37c108a6c38964f79a6621eccb33ddc1, type: 3}
+=======
+>>>>>>> Stashed changes
 --- !u!223 &1908123726
 Canvas:
   m_ObjectHideFlags: 0

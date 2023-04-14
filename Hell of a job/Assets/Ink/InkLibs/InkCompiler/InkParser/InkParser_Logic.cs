@@ -250,9 +250,15 @@ namespace Ink
             return result;
         }
 
+<<<<<<< Updated upstream
         protected Parsed.Object InlineLogicOrGlue()
         {
             return (Parsed.Object) OneOf (InlineLogic, Glue);
+=======
+        protected Parsed.Object InlineLogicOrGlueOrStartTag()
+        {
+            return (Parsed.Object) OneOf (InlineLogic, Glue, StartTag);
+>>>>>>> Stashed changes
         }
 
         protected Parsed.Glue Glue()
@@ -273,11 +279,24 @@ namespace Ink
                 return null;
             }
 
+<<<<<<< Updated upstream
             Whitespace ();
 
             var logic = (Parsed.Object) Expect(InnerLogic, "some kind of logic, conditional or sequence within braces: { ... }");
             if (logic == null)
                 return null;
+=======
+            var wasParsingString = parsingStringExpression;
+            var wasTagActive = tagActive;
+
+            Whitespace ();
+
+            var logic = (Parsed.Object) Expect(InnerLogic, "some kind of logic, conditional or sequence within braces: { ... }");
+            if (logic == null) {
+                parsingStringExpression = wasParsingString;
+                return null;
+            }
+>>>>>>> Stashed changes
 
             DisallowIncrement (logic);
 
@@ -290,6 +309,22 @@ namespace Ink
 
             Expect (String("}"), "closing brace '}' for inline logic");
 
+<<<<<<< Updated upstream
+=======
+            // Allow nested strings and logic
+            parsingStringExpression = wasParsingString;
+
+            // Difference between:
+            //
+            //     1) A thing # {image}.jpg
+            //     2) A {red #red|blue #blue} sequence.
+            //
+            //  When logic ends in (1) we still want tag to continue.
+            //  When logic ends in (2) we want to auto-end the tag.
+            //  Side note: we simply disallow tags within strings.
+            if( !wasTagActive ) EndTagIfNecessary(contentList);
+
+>>>>>>> Stashed changes
             return contentList;
         }
 
@@ -330,6 +365,11 @@ namespace Ink
                 InnerExpression,
             };
 
+<<<<<<< Updated upstream
+=======
+            bool wasTagActiveAtStartOfScope = tagActive;
+
+>>>>>>> Stashed changes
             // Adapted from "OneOf" structuring rule except that in
             // order for the rule to succeed, it has to maximally
             // cover the entire string within the { }. Used to
@@ -347,8 +387,14 @@ namespace Ink
                         FailRule (ruleId);
 
                     // Full parse of content within braces
+<<<<<<< Updated upstream
                     else
                         return (Parsed.Object) SucceedRule (ruleId, result);
+=======
+                    else {
+                        return (Parsed.Object) SucceedRule (ruleId, result);
+                    }
+>>>>>>> Stashed changes
 
                 } else {
                     FailRule (ruleId);

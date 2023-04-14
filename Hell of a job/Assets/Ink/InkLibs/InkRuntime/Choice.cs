@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 ﻿
+=======
+﻿using System.Collections.Generic;
+>>>>>>> Stashed changes
 namespace Ink.Runtime
 {
     /// <summary>
@@ -46,6 +50,11 @@ namespace Ink.Runtime
 
         public bool isInvisibleDefault;
 
+<<<<<<< Updated upstream
+=======
+        public List<string> tags;
+
+>>>>>>> Stashed changes
         public Choice()
         {
         }

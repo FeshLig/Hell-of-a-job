@@ -70,6 +70,10 @@ namespace Ink
                 this.characterInLineIndex = fromElement.characterInLineIndex;
                 this.lineIndex = fromElement.lineIndex;
                 this.reportedErrorInScope = fromElement.reportedErrorInScope;
+<<<<<<< Updated upstream
+=======
+                this.customFlags = fromElement.customFlags;
+>>>>>>> Stashed changes
             }
 
             static int _uniqueIdCounter;

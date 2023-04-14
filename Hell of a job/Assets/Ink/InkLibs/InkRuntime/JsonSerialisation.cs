@@ -242,7 +242,11 @@ namespace Ink.Runtime
                 return;
             }
 
+<<<<<<< Updated upstream
             // Tag
+=======
+            // Legacy tag
+>>>>>>> Stashed changes
             var tag = obj as Tag;
             if (tag)
             {
@@ -476,9 +480,15 @@ namespace Ink.Runtime
                     return varAss;
                 }
 
+<<<<<<< Updated upstream
                 // Tag
                 if (obj.TryGetValue ("#", out propValue)) {
                     return new Runtime.Tag ((string)propValue);
+=======
+                // Legacy Tag with text
+                if (obj.TryGetValue ("#", out propValue)) {
+                    return new Runtime.Tag((string)propValue);
+>>>>>>> Stashed changes
                 }
 
                 // List value
@@ -706,6 +716,11 @@ namespace Ink.Runtime
             _controlCommandNames [(int)ControlCommand.CommandType.ListFromInt] = "listInt";
             _controlCommandNames [(int)ControlCommand.CommandType.ListRange] = "range";
             _controlCommandNames [(int)ControlCommand.CommandType.ListRandom] = "lrnd";
+<<<<<<< Updated upstream
+=======
+            _controlCommandNames [(int)ControlCommand.CommandType.BeginTag] = "#";
+            _controlCommandNames [(int)ControlCommand.CommandType.EndTag] = "/#";
+>>>>>>> Stashed changes
 
             for (int i = 0; i < (int)ControlCommand.CommandType.TOTAL_VALUES; ++i) {
                 if (_controlCommandNames [i] == null)

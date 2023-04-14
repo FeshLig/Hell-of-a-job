@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &1
 MonoBehaviour:
-  m_ObjectHideFlags: 61
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   templateFile: {fileID: 0}
   defaultJsonAssetPath: {fileID: 0}
-  compileAutomatically: 1
+  compileAllFilesAutomatically: 1
+  includeFilesToCompileAsMasterFiles: []
+  filesToCompileAutomatically: []
   delayInPlayMode: 1
   handleJSONFilesAutomatically: 1
   compileTimeout: 30
   printInkLogsInConsoleOnCompile: 0
+  suppressStartupWindow: 0

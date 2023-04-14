@@ -1,7 +1,11 @@
 fileFormatVersion: 2
 guid: 430cb8f71c23c438cb8b0ce85cc80fa6
 timeCreated: 1459463931
+<<<<<<< Updated upstream
 licenseType: Store
+=======
+licenseType: Pro
+>>>>>>> Stashed changes
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []

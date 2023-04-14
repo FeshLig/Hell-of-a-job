@@ -38,6 +38,7 @@ namespace Ink
             Parse (Whitespace);
 
             var result = Parse(MixedTextAndLogic);
+<<<<<<< Updated upstream
 
             // Terminating tag
             bool onlyTags = false;
@@ -53,6 +54,8 @@ namespace Ink
                 }
             }
 
+=======
+>>>>>>> Stashed changes
             if (result == null || result.Count == 0)
                 return null;
 
@@ -71,9 +74,20 @@ namespace Ink
                 TrimEndWhitespace (result, terminateWithSpace:false);
             }
 
+<<<<<<< Updated upstream
             // Add newline since it's the end of the line
             // (so long as it's a line with only tags)
             if( !onlyTags )
+=======
+            EndTagIfNecessary(result);
+
+            // If the line doens't actually contain any normal text content
+            // but is in fact entirely a tag, then let's not append
+            // a newline, since we want the tag (or tags) to be associated
+            // with the line below rather than being completely independent.
+            bool lineIsPureTag = result.Count > 0 && result[0] is Parsed.Tag && ((Parsed.Tag)result[0]).isStart;
+            if( !lineIsPureTag )
+>>>>>>> Stashed changes
                 result.Add (new Text ("\n"));
 
             Expect(EndOfLine, "end of line", recoveryRule: SkipToNextLine);
@@ -89,7 +103,11 @@ namespace Ink
                 Error ("You shouldn't use a '~' here - tildas are for logic that's on its own line. To do inline logic, use { curly braces } instead");
 
             // Either, or both interleaved
+<<<<<<< Updated upstream
             var results = Interleave<Parsed.Object>(Optional (ContentText), Optional (InlineLogicOrGlue));
+=======
+            var results = Interleave<Parsed.Object>(Optional (ContentText), Optional (InlineLogicOrGlueOrStartTag));
+>>>>>>> Stashed changes
 
             // Terminating divert?
             // (When parsing content for the text of a choice, diverts aren't allowed.
@@ -103,6 +121,12 @@ namespace Ink
                     if (results == null)
                         results = new List<Parsed.Object> ();
 
+<<<<<<< Updated upstream
+=======
+                    // End previously active tag if necessary
+                    EndTagIfNecessary(results);
+
+>>>>>>> Stashed changes
                     TrimEndWhitespace (results, terminateWithSpace:true);
 
                     results.AddRange (diverts);

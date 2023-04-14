@@ -31,6 +31,11 @@ namespace Ink.Runtime
             ListFromInt,
             ListRange,
             ListRandom,
+<<<<<<< Updated upstream
+=======
+            BeginTag,
+            EndTag,
+>>>>>>> Stashed changes
             //----
             TOTAL_VALUES
         }
@@ -161,6 +166,19 @@ namespace Ink.Runtime
             return new ControlCommand (CommandType.ListRandom);
         }
 
+<<<<<<< Updated upstream
+=======
+        public static ControlCommand BeginTag ()
+        {
+            return new ControlCommand (CommandType.BeginTag);
+        }
+
+        public static ControlCommand EndTag ()
+        {
+            return new ControlCommand (CommandType.EndTag);
+        }
+
+>>>>>>> Stashed changes
         public override string ToString ()
         {
             return commandType.ToString();
