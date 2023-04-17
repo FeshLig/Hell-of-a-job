@@ -25,15 +25,17 @@ public class Person : MonoBehaviour, IMoving
 
     // целевое направление движения
     int MoveInput = 0;
-    // направление дэша
+    // направление рывка
     int direction = 0;
 
-    // длительность дэша в секундах
+    // длительность рывка в секундах
     [SerializeField] float startdash = 0.25f;
-    // скорость дэша в юнит/сек
+    // скорость рывка в юнит/сек
     [SerializeField] float dashspeed = 20f;
-    // переменная для отсчёта времени дэша
+    // переменная для отсчёта времени рывка
     float dashtime = 0f;
+    // можно ли совершить рывок
+    bool canDash = true;
 
     // скорость бега в юнит/сек
     [SerializeField] float speed;
@@ -54,6 +56,9 @@ public class Person : MonoBehaviour, IMoving
     {
         CheckGrounded();
         CheckMove();
+
+        if (IsGrounded && direction == 0)
+            canDash = true;
     }
 
     void Update()
@@ -112,10 +117,12 @@ public class Person : MonoBehaviour, IMoving
     // дэш
     private void Dash()
     {
-        if (InputManager.DashWasPressedThisFrame)
+        if (canDash && InputManager.DashWasPressedThisFrame)
         {
             direction = (MoveInput != 0) ? MoveInput : (sp.flipX ? -1 : 1);
             dashtime = startdash;
+
+            canDash = false;
         }
 
         if (direction == 0)
@@ -124,7 +131,6 @@ public class Person : MonoBehaviour, IMoving
         if (dashtime <= 0)
         {
             direction = 0;
-            dashtime = startdash;
             rb.velocity = new Vector2(0f, rb.velocity.y);
         }
         else

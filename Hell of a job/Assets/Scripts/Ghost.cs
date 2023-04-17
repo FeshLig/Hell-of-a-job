@@ -108,6 +108,8 @@ public class Ghost : Enemy, IMoving
     // передвижение
     void HandleMovement()
     {
+        spriteRenderer.flipX = transform.position.x < player.transform.position.x;
+
         if (isCharging)
         {
             transform.position = Vector2.MoveTowards(transform.position, chargeTargetPosition, chargeSpeed * Time.deltaTime);

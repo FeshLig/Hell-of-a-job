@@ -23,7 +23,8 @@ public class DialogueTrigger : MonoBehaviour
         if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
             visualCue.SetActive(true);
-            if (InpuManager.GetInstance().GetInteractPressed())
+
+            if (InputManager.InteractWasPressedThisFrame)
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
@@ -37,16 +38,12 @@ public class DialogueTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.tag == "Player")
-        {
             playerInRange = true;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.gameObject.tag == "Player")
-        {
             playerInRange = false;
-        }
     }
 }

@@ -31,4 +31,10 @@ public class PlayerHealthManager : HealthManager
         cameraController.ShakeOnce(amount * damageMultiplier / maxHealth);
     }
     */
+
+    new protected void Die()
+    {
+        base.Die();
+        // TO DO: открыть экран поражения
+    }
 }

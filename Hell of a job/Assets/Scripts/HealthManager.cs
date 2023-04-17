@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
+    // ссылка на аниматор
+    protected Animator animator;
+
     // максимальное количество здоровья
     [SerializeField] protected float maxHealth = 100f;
     // текущее количество здоровья
@@ -14,6 +17,8 @@ public class HealthManager : MonoBehaviour
 
     void Start()
     {
+        //animator = GetComponent<Animator>();
+        TryGetComponent<Animator>(out animator);
         currentHealth = maxHealth;
     }
 
@@ -21,12 +26,25 @@ public class HealthManager : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount * damageMultiplier;
+
+        if (currentHealth <= 0)
+            Die();
     }
 
     // восстановить здоровье
     public void Heal(float amount)
     {
         currentHealth += amount;
+    }
+
+    // умереть
+    protected void Die()
+    {
+        if (animator != null)
+            animator.SetBool("isDead", true);
+        
+        GetComponent<IMoving>().DisableMovement();
+        GetComponent<Collider2D>().enabled = false;
     }
 
     // увеличить получаемый урон на %
@@ -42,7 +60,7 @@ public class HealthManager : MonoBehaviour
     }
 
     // корутина для временного увеличения получаемого урона на %
-    IEnumerator TemporarilyIncreaseDamageMultiplier(float percentage, float seconds)
+    protected IEnumerator TemporarilyIncreaseDamageMultiplier(float percentage, float seconds)
     {
         damageMultiplier += percentage * 0.01f;
         yield return new WaitForSeconds(seconds);
@@ -62,7 +80,7 @@ public class HealthManager : MonoBehaviour
     }
 
     // корутина для временного уменьшения получаемого урона на %
-    IEnumerator TemporarilyDecreaseDamageMultiplier(float percentage, float seconds)
+    protected IEnumerator TemporarilyDecreaseDamageMultiplier(float percentage, float seconds)
     {
         damageMultiplier -= percentage * 0.01f;
         yield return new WaitForSeconds(seconds);

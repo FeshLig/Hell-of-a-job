@@ -38,6 +38,7 @@ public class CameraController : MonoBehaviour
         (
             player.transform.position.x + positionOffset.x,
             player.transform.position.y + positionOffset.y,
+            //transform.position.y,
             transform.position.z
         );
 
