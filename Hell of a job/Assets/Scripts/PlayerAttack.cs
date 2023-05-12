@@ -3,52 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player_Attack : MonoBehaviour
+public class PlayerAttack : MonoBehaviour
 {
-
     Animator animator;
+    Inventory inventory;
 
     [SerializeField] Transform attackPoint;
     [SerializeField] float attackRange = 0.5f;
+    float attackDamage;
 
     [SerializeField] LayerMask enemyLayerMask;
-    [SerializeField] float lightAttackDamage;
-    [SerializeField] float heavyAttackDamage;
     
     void Start()
     {
         TryGetComponent<Animator>(out animator);
+        inventory = GetComponent<Inventory>();
     }
 
     void Update()
     {
+        if (inventory.IsEmpty)
+            return;
+
         if (InputManager.LightAttackWasPressedThisFrame)
-            Attack(false);
-        if (InputManager.HeavyAttackWasPressedThisFrame)
-            Attack(true);
+            Attack(inventory.CurrentWeapon.lightAttackDamage);
+        else if (InputManager.HeavyAttackWasPressedThisFrame)
+            Attack(inventory.CurrentWeapon.heavyAttackDamage);
+        else if (InputManager.SpecialAttackWasPressedThisFrame)
+            Attack(inventory.CurrentWeapon.specialAttackDamage);
     }
 
-    void Attack(bool isHeavyAttack)
+    void Attack(float damage)
     {
-        //��������
-        animator.SetTrigger("Attack");
-        //����������� ������
+        if (animator != null)
+            animator.SetTrigger("Attack");
+        
         attackPoint.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        float attackDamage = isHeavyAttack ? heavyAttackDamage : lightAttackDamage;
+
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayerMask);
-        //����
+        
         foreach(Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<HealthManager>().TakeDamage(attackDamage);
+            enemy.GetComponent<HealthManager>().TakeDamage(damage);
+            enemy.GetComponent<Knockback>().ApplyKnockback(transform);
         }
     }
 
     void OnDrawGizmosSelected()
     {
         if(attackPoint == null)
-        {
             return;
-        }
+        
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }

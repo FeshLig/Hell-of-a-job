@@ -22,14 +22,16 @@ public class Knockback : MonoBehaviour
     }
 
     // применить отбрасывание
-    public void ApplyKnockback(Vector2 direction)
+    public void ApplyKnockback(Transform source)
     {
+        Vector2 direction = transform.position - source.position;
         StartCoroutine(ApplyKnockbackCoroutine(direction));
     }
 
     // применить отбрасывание с дополнительным множителем
-    public void ApplyKnockback(Vector2 direction, float multiplier)
+    public void ApplyKnockback(Transform source, float multiplier)
     {
+        Vector2 direction = transform.position - source.position;
         StartCoroutine(ApplyKnockbackCoroutine(direction, multiplier));
     }
 

@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
     void ApplyCollisionDamage()
     {
         player.GetComponent<PlayerHealthManager>().TakeDamage(collisionDamage);
-        player.GetComponent<Knockback>().ApplyKnockback(player.transform.position - transform.position);
+        player.GetComponent<Knockback>().ApplyKnockback(transform);
     }
 
     public void OnTriggerEnter2D(Collider2D col)

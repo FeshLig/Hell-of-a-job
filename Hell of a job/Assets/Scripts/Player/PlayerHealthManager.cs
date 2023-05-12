@@ -7,8 +7,9 @@ public class PlayerHealthManager : HealthManager
     // ссылка на контроллер камеры
     CameraController cameraController;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         cameraController = FindObjectOfType<CameraController>();
     }
 

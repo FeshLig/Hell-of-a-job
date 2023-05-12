@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Ghost : Enemy, IMoving
 {
+    // ссылка на Rigidbody
+    Rigidbody2D rb;
     // ссылка на спрайт
     SpriteRenderer spriteRenderer;
 
@@ -63,6 +65,7 @@ public class Ghost : Enemy, IMoving
     {
         base.Start();
 
+        rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         defaultCollisionDamage = base.collisionDamage;
 
@@ -195,6 +198,7 @@ public class Ghost : Enemy, IMoving
     public void EnableMovement()
     {
         enableMovement = true;
+        rb.velocity = Vector2.zero;
     }
 
     // выключить движение (реализация интерфейса IMoving)
@@ -202,5 +206,12 @@ public class Ghost : Enemy, IMoving
     {
         enableMovement = false;
         StopCharging();
+        rb.velocity = Vector2.zero;
+    }
+
+    // полностью выключить скрипт (реализация интерфейса IMoving)
+    public void DisableCompletely()
+    {
+        this.enabled = false;
     }
 }

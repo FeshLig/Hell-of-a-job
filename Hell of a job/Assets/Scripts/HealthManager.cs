@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
+    // ссылка на спрайт
+    protected SpriteRenderer spriteRenderer;
     // ссылка на аниматор
     protected Animator animator;
 
@@ -15,8 +17,9 @@ public class HealthManager : MonoBehaviour
     // множитель для получаемого урона
     [SerializeField] protected float damageMultiplier = 1f;
 
-    void Start()
+    protected void Start()
     {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         //animator = GetComponent<Animator>();
         TryGetComponent<Animator>(out animator);
         currentHealth = maxHealth;
@@ -26,9 +29,31 @@ public class HealthManager : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount * damageMultiplier;
+        StartCoroutine(MakeSpriteRed());
 
         if (currentHealth <= 0)
             Die();
+    }
+
+    IEnumerator MakeSpriteRed()
+    {
+        spriteRenderer.color = new Color
+        (
+            spriteRenderer.color.r,
+            spriteRenderer.color.g / 2f,
+            spriteRenderer.color.b / 2f,
+            spriteRenderer.color.a
+        );
+
+        yield return new WaitForSeconds(0.25f);
+        
+        spriteRenderer.color = new Color
+        (
+            spriteRenderer.color.r,
+            spriteRenderer.color.g * 2f,
+            spriteRenderer.color.b * 2f,
+            spriteRenderer.color.a
+        );
     }
 
     // восстановить здоровье
@@ -43,7 +68,9 @@ public class HealthManager : MonoBehaviour
         if (animator != null)
             animator.SetBool("isDead", true);
         
-        GetComponent<IMoving>().DisableMovement();
+        GetComponent<IMoving>().DisableCompletely();
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().isKinematic = true;
         GetComponent<Collider2D>().enabled = false;
     }
 

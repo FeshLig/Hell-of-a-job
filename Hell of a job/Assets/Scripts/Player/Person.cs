@@ -153,4 +153,10 @@ public class Person : MonoBehaviour, IMoving
         dashtime = 0f;
         rb.velocity = new Vector2(0f, rb.velocity.y);
     }
+    
+    // полностью выключить скрипт (реализация интерфейса IMoving)
+    public void DisableCompletely()
+    {
+        this.enabled = false;
+    }
 }
