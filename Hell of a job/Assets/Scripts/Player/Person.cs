@@ -15,6 +15,9 @@ public class Person : MonoBehaviour, IMoving
     // включено ли движение
     bool enableMovement = true;
 
+    [Header("Player Animation Settings")]
+    public Animator animator;
+
     // смещение коллайдера для проверки, приземлён ли игрок
     [SerializeField] float groundCheckYOffset = -0.03f;
     // на сколько уменьшить ширину коллайдера для проверки, приземлён ли игрок
@@ -75,8 +78,16 @@ public class Person : MonoBehaviour, IMoving
 
         if (IsGrounded && InputManager.JumpWasPressedThisFrame)
             Jump();
+
         
+
         Dash();
+        
+        animator.SetFloat("HorizontalMove", Mathf.Abs(rb.velocity.x));
+        if (rb.velocity.x > 0)
+            transform.localScale = new Vector2(1, 1);
+        else if (rb.velocity.x < 0)
+            transform.localScale = new Vector2(-1, 1);
     }
 
     // проверка, приземлён ли игрок
@@ -119,6 +130,7 @@ public class Person : MonoBehaviour, IMoving
     {
         if (canDash && InputManager.DashWasPressedThisFrame)
         {
+            animator.SetTrigger("Dashing");
             direction = (MoveInput != 0) ? MoveInput : (sp.flipX ? -1 : 1);
             dashtime = startdash;
 

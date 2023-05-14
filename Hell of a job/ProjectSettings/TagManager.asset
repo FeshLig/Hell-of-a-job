@@ -42,3 +42,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: "\u0418\u0433\u0440\u043E\u043A"
+    uniqueID: 1591341129
+    locked: 0

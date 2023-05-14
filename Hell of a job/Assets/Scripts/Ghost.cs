@@ -19,6 +19,8 @@ public class Ghost : Enemy, IMoving
     // скорость рывка к игроку
     [SerializeField] float chargeSpeed = 10f;
 
+    public Animator animator;
+
     // урон при рывке
     [SerializeField] float chargeDamage = 25f;
     // урон от столкновения

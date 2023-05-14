@@ -26,17 +26,21 @@ public class PlayerAttack : MonoBehaviour
             return;
 
         if (InputManager.LightAttackWasPressedThisFrame)
+        {
             Attack(inventory.CurrentWeapon.lightAttackDamage);
+            animator.SetTrigger("Attack");
+        }
         else if (InputManager.HeavyAttackWasPressedThisFrame)
+        {
             Attack(inventory.CurrentWeapon.heavyAttackDamage);
+            animator.SetTrigger("Attack2");
+        }        
         else if (InputManager.SpecialAttackWasPressedThisFrame)
             Attack(inventory.CurrentWeapon.specialAttackDamage);
     }
 
     void Attack(float damage)
     {
-        if (animator != null)
-            animator.SetTrigger("Attack");
         
         attackPoint.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
