@@ -8,6 +8,8 @@ public class PlayerAttack : MonoBehaviour
     Animator animator;
     Inventory inventory;
 
+    [SerializeField] bool usePointAndClick = false;
+
     [SerializeField] Transform attackPoint;
     [SerializeField] float attackRange = 0.5f;
     float attackDamage;
@@ -41,8 +43,8 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack(float damage)
     {
-        
-        attackPoint.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        if (usePointAndClick)
+            attackPoint.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayerMask);
         
